@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "ADMIN": "United States", "ISO_A2": "US" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-100.0, 40.0], [-101.0, 40.0], [-101.0, 41.0],
+          [-100.0, 41.0], [-100.0, 40.0]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "ADMIN": "India", "ISO_A2": "IN" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [77.0, 28.0], [78.0, 28.0], [78.0, 29.0],
+          [77.0, 29.0], [77.0, 28.0]
+        ]]
+      }
+    }
+  ]
+}
