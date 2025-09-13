@@ -69,7 +69,7 @@ export default function App() {
         <SearchBar
           loading={loading}
           onSearch={(q)=>runSearch(q, 24, false)}
-          onSample={()=>runSearch("demo", 24, true)}
+          onSample={()=>runSearch("electric cars", 24, true)}
         />
 
         {search && (

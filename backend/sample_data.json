@@ -3,21 +3,21 @@
     "id": "s1",
     "source": "sample",
     "author": "seed",
-    "text": "Lots of optimism in India about solar energy and heat pumps!",
-    "created_at": "2025-09-12T09:15:00+00:00"
+    "text": "People in India are excited about the future of electric cars!",
+    "created_at": "2025-09-13T09:15:00+00:00"
   },
   {
     "id": "s2",
     "source": "sample",
     "author": "seed",
-    "text": "Not happy with BrandX update here in New York, USA.",
-    "created_at": "2025-09-12T10:05:00+00:00"
+    "text": "Criticism in the USA about charging station availability for electric cars.",
+    "created_at": "2025-09-13T10:05:00+00:00"
   },
   {
     "id": "s3",
     "source": "sample",
     "author": "seed",
-    "text": "Germany’s rollout looks great—people seem very positive.",
-    "created_at": "2025-09-12T11:30:00+00:00"
+    "text": "Germany praises new incentives making electric cars more affordable.",
+    "created_at": "2025-09-13T11:30:00+00:00"
   }
 ]
