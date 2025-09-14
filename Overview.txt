@@ -1,0 +1,22 @@
+## Inspiration
+I wanted to make global sentiment visible as a business tool. Specifically as a tool for new companies to search for markets where their product or services have a positive sentiment. And where they have the best opportunity for finding demand or capturing market share.
+
+## What it does
+This app allows users to input keywords that my software uses to search references of through the YouTube API and NewsAPI. This data is then analyzed by Gemini or VADER to gauge whether regional sentiment of the keyword is positive, neutral, or negative. This analysis is then presented in a neat data visualization and Gemini is used to provide further insights on the data. Finally, users can chat with Gemini about their results or anything else.
+
+## How we built it
+I built Global Insights with a Python FastAPI backend that ingests data from the YouTube Data API and the NewsAPI, stores it in a SQLite DB, and analyzes sentiment using both VADER and Google Gemini. Our frontend was build with React and TypeScript and uses Leaflet for the interactive world map and Recharts for data visualizations. The UI is styled using TailwindCSS. Finally, I added a Gemini insights functionality and chat to summarize the data analysis and let users ask  questions about the data.
+
+## Challenges we ran into
+1. Ingesting large amounts of data became difficult to optimize. Along with API rate limits, we had to try sampling small amounts of data from different sources.
+
+2. Data without location information made it hard to infer region or country of origin. So I had to implement a function to infer location but it was difficult to infer with a high degree of accuracy.
+
+## Accomplishments that I'm proud of
+Built a working, full-stack, AI-powered dashboard in 24 hours solo. Made a decent UI even though frontend development is not my forte. And also integrated AI functionality through insights and chat. Something that I was completely new to.
+
+## What I learned
+How to integrate LLMs with traditional APIs to create a more complex and feature rich application. Practical lessons in API integration, rate limiting, and real-time data pipelines. And how to manage development pacing and tasks while building an MVP as a solo project in less than 2 days.
+
+## What's next for Global Insights
+I will add more data sources for our tool to analyze, such as reddit, twitter, instagram, etc. Furthermore, in addition to news and posts about a topic, I want to integrate business analytics and financial information to pair with sentiment to give users a much better idea of market conditions in different regions regarding their topic. Finally, I want to build a much better UI so users have as best of an experience as possible using this tool and have all of the useful information visible to them in a clear and easy to read format.
