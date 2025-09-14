@@ -6,6 +6,12 @@ from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func
 
+# add near other imports
+from fastapi import Body
+from gemini_chat import chat_reply
+from typing import Dict, Any
+
+
 from models import init_db, SessionLocal, Post
 from ingest import (
     ingest_sample,
@@ -130,41 +136,87 @@ def geo(q: str, hours: int = 24):
 
 @app.get("/api/insights")
 def insights(q: str, hours: int = 24):
-    """
-    Summarize recent items (from DB) for a keyword using Gemini (if gemini_helper is available).
-    Returns: {summary, themes[], aspects{price,quality,service}, quotes[]}
-    """
-    if not _HAS_INSIGHTS:
-        raise HTTPException(status_code=400, detail="Insights not enabled on this server.")
-    kw = normalize_keyword(q)
+    kw = (q or "").strip().lower()
     cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+
     sess = SessionLocal()
     rows = (
         sess.query(Post)
         .filter(Post.keyword == kw, Post.created_at >= cutoff)
         .order_by(Post.created_at.desc())
-        .limit(100)
+        .limit(120)
         .all()
     )
     sess.close()
 
     if not rows:
-        raise HTTPException(status_code=400, detail="No posts found to summarize.")
-
-    posts = [
-        {
-            "text": r.text,
-            "sentiment_label": r.sentiment_label,
-            "sentiment_score": r.sentiment_score,
-            "created_at": r.created_at.isoformat(),
-            "source": r.source,
-            "country_code": r.country_code,
+        # Return 200 + empty insights (frontend can still render a friendly message)
+        return {
+            "summary": "No recent posts to summarize for this window.",
+            "themes": [],
+            "aspects": {"price": 0, "quality": 0, "service": 0},
+            "quotes": []
         }
-        for r in rows
-    ]
 
-    result = summarize_posts(kw, posts)  # from gemini_helper.py
-    return result
+    posts = [{
+        "text": r.text,
+        "sentiment_label": r.sentiment_label,
+        "sentiment_score": r.sentiment_score,
+        "created_at": r.created_at.isoformat(),
+        "source": r.source,
+        "country_code": r.country_code,
+    } for r in rows]
+
+    try:
+        result = summarize_posts(kw, posts)
+        return result
+    except Exception as e:
+        print("[insights][route-error]", repr(e))
+        return {
+            "summary": "Insights unavailable due to a server-side error.",
+            "themes": [],
+            "aspects": {"price": 0, "quality": 0, "service": 0},
+            "quotes": []
+        }
+
+@app.post("/api/chat")
+def chat_api(
+    q: str,
+    hours: int = 168,
+    payload: Dict[str, Any] = Body(default={}),
+):
+    """
+    Body shape:
+      { "message": string, "history": [{role, content}] }
+    Returns: { "reply": string }
+    """
+    keyword = (q or "").strip().lower()
+    msg = (payload or {}).get("message") or ""
+    history = (payload or {}).get("history") or []
+
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    sess = SessionLocal()
+    rows = (
+        sess.query(Post)
+        .filter(Post.keyword == keyword, Post.created_at >= cutoff)
+        .order_by(Post.created_at.desc())
+        .limit(120)
+        .all()
+    )
+    sess.close()
+
+    posts = [{
+        "text": r.text,
+        "sentiment_label": r.sentiment_label,
+        "sentiment_score": r.sentiment_score,
+        "created_at": r.created_at.isoformat(),
+        "source": r.source,
+        "country_code": r.country_code,
+    } for r in rows]
+
+    reply = chat_reply(keyword, posts, history, msg)
+    return {"reply": reply}
+
 
 @app.get("/api/health")
 def health():

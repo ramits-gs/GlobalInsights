@@ -1,23 +1,362 @@
 [
   {
-    "id": "s1",
-    "source": "sample",
-    "author": "seed",
-    "text": "People in India are excited about the future of electric cars!",
-    "created_at": "2025-09-13T09:15:00+00:00"
+    "id": "ev_001_us",
+    "source": "news",
+    "author": "AP",
+    "text": "In the United States, California expands rebates for electric cars but critics say the grid needs upgrades first.",
+    "created_at": "2024-09-01T10:00:00+00:00",
+    "keyword": "electric cars"
   },
   {
-    "id": "s2",
-    "source": "sample",
-    "author": "seed",
-    "text": "Criticism in the USA about charging station availability for electric cars.",
-    "created_at": "2025-09-13T10:05:00+00:00"
+    "id": "ev_002_ca",
+    "source": "youtube",
+    "author": "CarTalks Canada",
+    "text": "In Canada, winter range on my EV drops a lot, but the low maintenance is worth it.",
+    "created_at": "2024-09-01T12:30:00+00:00",
+    "keyword": "electric cars"
   },
   {
-    "id": "s3",
-    "source": "sample",
-    "author": "seed",
-    "text": "Germany praises new incentives making electric cars more affordable.",
-    "created_at": "2025-09-13T11:30:00+00:00"
+    "id": "ev_003_uk",
+    "source": "news",
+    "author": "BBC",
+    "text": "The United Kingdom delays petrol car ban, yet EV charging points are rolling out rapidly in London and Manchester.",
+    "created_at": "2024-09-02T08:15:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_004_de",
+    "source": "news",
+    "author": "DW",
+    "text": "Germany boosts subsidies for home chargers as automakers ramp up electric cars made in Bavaria.",
+    "created_at": "2024-09-02T14:45:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_005_fr",
+    "source": "youtube",
+    "author": "Paris EV Life",
+    "text": "France finally added fast chargers along the A7; my road trip to Marseille in an electric car was smooth.",
+    "created_at": "2024-09-03T09:05:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_006_es",
+    "source": "news",
+    "author": "El País",
+    "text": "Spain offers tax credits for electric cars, yet rural regions still lack reliable charging networks.",
+    "created_at": "2024-09-03T16:10:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_007_it",
+    "source": "youtube",
+    "author": "RomaDriver",
+    "text": "In Italy the EV incentives are great, but parking with chargers in Rome is always full.",
+    "created_at": "2024-09-04T11:20:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_008_in",
+    "source": "news",
+    "author": "Economic Times",
+    "text": "India unveils a policy to localize battery production for electric cars and reduce dependence on imports.",
+    "created_at": "2024-09-04T18:30:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_009_cn",
+    "source": "news",
+    "author": "SCMP",
+    "text": "China's Shenzhen expands curbside charging; domestic brands make electric cars cheaper than rivals.",
+    "created_at": "2024-09-05T07:40:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_010_jp",
+    "source": "youtube",
+    "author": "TokyoTech",
+    "text": "Japan's solid-state batteries could make electric cars lighter, but mass production is still years away.",
+    "created_at": "2024-09-05T15:55:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_011_au",
+    "source": "news",
+    "author": "ABC Australia",
+    "text": "Australia sees rapid adoption of electric cars in Sydney and Melbourne as highway charging improves.",
+    "created_at": "2024-09-06T10:25:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_012_br",
+    "source": "news",
+    "author": "Folha",
+    "text": "Brazil pilots biofuel-friendly policies while São Paulo tests incentives for electric cars in fleets.",
+    "created_at": "2024-09-06T13:10:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_013_za",
+    "source": "youtube",
+    "author": "Cape EV",
+    "text": "In South Africa, loadshedding makes charging tricky, but solar + home batteries are changing the game.",
+    "created_at": "2024-09-07T09:35:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_014_se",
+    "source": "news",
+    "author": "SVT",
+    "text": "Sweden expands workplace chargers; commuters say winter EV driving is fine with preconditioning.",
+    "created_at": "2024-09-07T17:00:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "ev_015_ae",
+    "source": "news",
+    "author": "The National (UAE)",
+    "text": "The United Arab Emirates adds ultra-fast chargers along Abu Dhabi–Dubai, making electric cars more practical.",
+    "created_at": "2024-09-08T08:50:00+00:00",
+    "keyword": "electric cars"
+  },
+  {
+    "id": "cr_001_us",
+    "source": "news",
+    "author": "Bloomberg",
+    "text": "In the United States, the SEC advances new rules for crypto exchanges, rattling traders on Wall Street.",
+    "created_at": "2024-08-20T09:00:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_002_ca",
+    "source": "news",
+    "author": "CBC",
+    "text": "Canada tightens stablecoin guidance while Toronto startups keep building crypto wallets.",
+    "created_at": "2024-08-20T12:15:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_003_mx",
+    "source": "youtube",
+    "author": "CriptoMX",
+    "text": "En México, muchos usan bitcoin para remesas; las comisiones son mejores que los bancos.",
+    "created_at": "2024-08-21T16:00:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_004_br",
+    "source": "news",
+    "author": "Estadão",
+    "text": "Brazilian regulators explore CBDC pilots while crypto adoption grows in São Paulo and Rio.",
+    "created_at": "2024-08-22T10:30:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_005_ar",
+    "source": "news",
+    "author": "La Nación",
+    "text": "Argentina sees rising crypto use amid inflation; locals prefer dollar-pegged stablecoins.",
+    "created_at": "2024-08-22T14:40:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_006_ng",
+    "source": "youtube",
+    "author": "Naija Crypto",
+    "text": "In Nigeria, P2P crypto trading remains strong; people rely on it when banks restrict transfers.",
+    "created_at": "2024-08-23T19:20:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_007_za",
+    "source": "news",
+    "author": "News24",
+    "text": "South Africa grants more crypto licenses; Johannesburg exchanges promise better protections.",
+    "created_at": "2024-08-24T08:05:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_008_tr",
+    "source": "news",
+    "author": "Anadolu",
+    "text": "Turkey's parliament drafts comprehensive crypto regulation following high-profile exchange failures.",
+    "created_at": "2024-08-24T12:50:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_009_eu",
+    "source": "news",
+    "author": "Politico EU",
+    "text": "Across the European Union, MiCA rules push exchanges to register and enhance consumer disclosures.",
+    "created_at": "2024-08-25T07:45:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_010_in",
+    "source": "news",
+    "author": "The Hindu",
+    "text": "India's 1% TDS on crypto trades still discourages activity, but Web3 developers keep shipping.",
+    "created_at": "2024-08-25T12:35:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_011_cn",
+    "source": "news",
+    "author": "Caixin",
+    "text": "China accelerates digital yuan pilots while keeping tight controls on public crypto trading.",
+    "created_at": "2024-08-26T09:55:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_012_jp",
+    "source": "youtube",
+    "author": "Tokyo DeFi",
+    "text": "Japan's exchanges feel safer now; regulations increased, but liquidity for altcoins is thin.",
+    "created_at": "2024-08-26T13:10:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_013_kr",
+    "source": "news",
+    "author": "Yonhap",
+    "text": "South Korea demands stricter listings; Seoul retail traders remain active despite volatility.",
+    "created_at": "2024-08-27T11:15:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_014_ae",
+    "source": "news",
+    "author": "The National (UAE)",
+    "text": "The United Arab Emirates attracts crypto companies to Dubai's free zones with clear licensing.",
+    "created_at": "2024-08-27T18:00:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "cr_015_uk",
+    "source": "news",
+    "author": "Financial Times",
+    "text": "The United Kingdom pushes for fair advertising rules on crypto to curb scams targeting retail investors.",
+    "created_at": "2024-08-28T07:20:00+00:00",
+    "keyword": "crypto"
+  },
+  {
+    "id": "ai_001_us",
+    "source": "news",
+    "author": "NYTimes",
+    "text": "In the United States, schools debate AI policy while startups in San Francisco launch new copilots.",
+    "created_at": "2024-07-10T13:00:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_002_uk",
+    "source": "news",
+    "author": "Guardian",
+    "text": "The United Kingdom hosts an AI safety summit as regulators consider rules for foundation models.",
+    "created_at": "2024-07-10T18:25:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_003_de",
+    "source": "news",
+    "author": "Handelsblatt",
+    "text": "Germany funds AI research hubs in Munich and Berlin to support industrial automation.",
+    "created_at": "2024-07-11T09:10:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_004_fr",
+    "source": "youtube",
+    "author": "Paris ML",
+    "text": "In France, AI startups are thriving; our lab in Paris just released a bilingual model.",
+    "created_at": "2024-07-11T20:40:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_005_in",
+    "source": "news",
+    "author": "Economic Times",
+    "text": "India launches an AI mission to modernize public healthcare, starting with pilot hospitals in Delhi.",
+    "created_at": "2024-07-12T10:05:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_006_cn",
+    "source": "news",
+    "author": "SCMP",
+    "text": "China invests in AI chip startups across Shenzhen and Shanghai to reduce reliance on imports.",
+    "created_at": "2024-07-12T16:30:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_007_jp",
+    "source": "youtube",
+    "author": "Tokyo AI",
+    "text": "Japan's robotics labs show off new humanoids; integrating AI planning is still challenging.",
+    "created_at": "2024-07-13T08:45:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_008_kr",
+    "source": "news",
+    "author": "Korea Herald",
+    "text": "South Korea funds AI semiconductor research in Daejeon to stay competitive globally.",
+    "created_at": "2024-07-13T12:15:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_009_br",
+    "source": "news",
+    "author": "Folha",
+    "text": "Brazil explores AI for agriculture analytics as universities in São Paulo pilot field sensors.",
+    "created_at": "2024-07-14T09:20:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_010_za",
+    "source": "youtube",
+    "author": "Cape Data",
+    "text": "In South Africa, startups use AI to detect water leaks in Cape Town; results look promising.",
+    "created_at": "2024-07-14T18:00:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_011_il",
+    "source": "news",
+    "author": "Haaretz",
+    "text": "Israel's AI cybersecurity firms expand exports, citing demand from Europe and the US.",
+    "created_at": "2024-07-15T07:50:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_012_ae",
+    "source": "news",
+    "author": "The National (UAE)",
+    "text": "The United Arab Emirates funds Arabic-first AI models to boost regional tech leadership.",
+    "created_at": "2024-07-15T13:35:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_013_ng",
+    "source": "news",
+    "author": "Premium Times",
+    "text": "Nigeria invests in AI training programs in Lagos to support fintech and health startups.",
+    "created_at": "2024-07-16T10:25:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_014_sg",
+    "source": "news",
+    "author": "Straits Times",
+    "text": "Singapore publishes guidelines for trustworthy AI while funding compute credits for SMEs.",
+    "created_at": "2024-07-16T14:45:00+00:00",
+    "keyword": "ai"
+  },
+  {
+    "id": "ai_015_au",
+    "source": "youtube",
+    "author": "Sydney AI",
+    "text": "Australia's universities push applied AI; my lab demo in Sydney showed solid results for medical imaging.",
+    "created_at": "2024-07-17T06:55:00+00:00",
+    "keyword": "ai"
   }
 ]
