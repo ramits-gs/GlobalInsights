@@ -1,26 +1,22 @@
 export default function SummaryCards({
   keyword, counts, total
 }: { keyword:string; counts:{pos:number;neu:number;neg:number}; total:number }) {
-  const pct = (k:keyof typeof counts)=> total ? Math.round((counts[k]*100)/total) : 0;
+  const pct = (n:number)=> total ? Math.round((n*100)/total) : 0;
   return (
     <div className="grid md:grid-cols-4 gap-4">
-      <div className="bg-white p-4 rounded shadow">
-        <div className="text-sm text-gray-500">Keyword</div>
+      <Card title="Keyword">
         <div className="text-xl font-semibold">{keyword}</div>
-        <div className="text-xs text-gray-500 mt-1">{total} posts</div>
-      </div>
-      <Card label="Positive" value={`${pct("pos")}%`} color="text-green-600"/>
-      <Card label="Neutral" value={`${pct("neu")}%`} color="text-gray-700"/>
-      <Card label="Negative" value={`${pct("neg")}%`} color="text-red-600"/>
+        <div className="text-xs text-gray-500">{total} posts</div>
+      </Card>
+      <Card title="Positive"><Value v={`${pct(counts.pos)}%`} cls="text-green-600" /></Card>
+      <Card title="Neutral"><Value v={`${pct(counts.neu)}%`} cls="text-gray-700" /></Card>
+      <Card title="Negative"><Value v={`${pct(counts.neg)}%`} cls="text-red-600" /></Card>
     </div>
   );
 }
-
-function Card({label, value, color}:{label:string; value:string; color:string}) {
-  return (
-    <div className="bg-white p-4 rounded shadow">
-      <div className="text-sm text-gray-500">{label}</div>
-      <div className={`text-2xl font-semibold ${color}`}>{value}</div>
-    </div>
-  );
+function Card({title, children}:{title:string;children:any}) {
+  return <div className="bg-white p-4 rounded shadow"><div className="text-sm text-gray-500">{title}</div>{children}</div>;
+}
+function Value({v, cls}:{v:string; cls?:string}) {
+  return <div className={`text-2xl font-semibold ${cls||""}`}>{v}</div>;
 }

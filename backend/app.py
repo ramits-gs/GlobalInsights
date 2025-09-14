@@ -1,38 +1,83 @@
 # backend/app.py
-from fastapi import FastAPI, HTTPException
+from datetime import datetime, timedelta, timezone
+from typing import List
+
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func
-from datetime import datetime, timedelta, timezone
-from models import init_db, SessionLocal, Post
-from ingest import ingest_sample
 
+from models import init_db, SessionLocal, Post
+from ingest import (
+    ingest_sample,
+    ingest_live,
+    iter_youtube_live,
+    iter_news_newsapi,
+)
+# Optional insights (Gemini summarization)
+try:
+    from gemini_helper import summarize_posts
+    _HAS_INSIGHTS = True
+except Exception:
+    _HAS_INSIGHTS = False
+
+# --- init ---
 init_db()
 app = FastAPI(title="GlobalInsights API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],   # For hackathon/demo; tighten in production
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 def normalize_keyword(q: str) -> str:
-    return q.strip().lower()
+    return (q or "").strip().lower()
+
+# --- routes ---
 
 @app.get("/api/search")
-def search(q: str, hours: int = 24, use_sample: bool = False):
+def search(
+    q: str = Query(..., description="Search keyword"),
+    hours: int = 24,
+    use_sample: bool = False,
+    sources: str = "youtube,news",
+    engine: str = Query("auto", description="Sentiment engine: gemini|vader|auto"),
+):
+    """
+    Ingest (sample or live) + return recent posts for keyword.
+    - use_sample=true -> loads backend/sample_data.json (kept in DB for reuse)
+    - live: pulls from YouTube comments and/or NewsAPI articles, then stores in DB
+    - hours: time window for what to return from DB
+    - engine: 'gemini' | 'vader' | 'auto' (auto uses env default w/ fallback)
+    """
     kw = normalize_keyword(q)
     sess = SessionLocal()
+
     if use_sample:
-        ingest_sample(kw)
+        ingest_sample(kw, engine_choice=engine)
+    else:
+        srcs = [s.strip().lower() for s in (sources or "").split(",") if s.strip()]
+        items = []
+        if "youtube" in srcs:
+            items.extend(iter_youtube_live(kw))
+        if "news" in srcs:
+            items.extend(iter_news_newsapi(kw, page_size=30))
+        if items:
+            ingest_live(kw, items, engine_choice=engine)
+
     cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
-    rows = (sess.query(Post)
-            .filter(Post.keyword == kw, Post.created_at >= cutoff)
-            .order_by(Post.created_at.desc())
-            .all())
+    rows: List[Post] = (
+        sess.query(Post)
+        .filter(Post.keyword == kw, Post.created_at >= cutoff)
+        .order_by(Post.created_at.desc())
+        .all()
+    )
     sess.close()
+
     return {
         "keyword": kw,
+        "engine_used": engine,
         "count": len(rows),
         "posts": [
             {
@@ -44,25 +89,83 @@ def search(q: str, hours: int = 24, use_sample: bool = False):
                 "sentiment_score": r.sentiment_score,
                 "sentiment_label": r.sentiment_label,
                 "country_code": r.country_code,
-            } for r in rows
-        ]
+            }
+            for r in rows
+        ],
     }
 
 @app.get("/api/geo")
 def geo(q: str, hours: int = 24):
+    """
+    Aggregate by country for the keyword within the time window.
+    Returns: [{ cc: ISO2, n: count, avg: avg_compound_score }, ...]
+    """
     kw = normalize_keyword(q)
     cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
     sess = SessionLocal()
-    rows = (sess.query(
-                Post.country_code.label("cc"),
-                func.count(Post.id).label("n"),
-                func.avg(Post.sentiment_score).label("avg"))
-            .filter(Post.keyword == kw, Post.created_at >= cutoff, Post.country_code.isnot(None))
-            .group_by(Post.country_code)
-            .all())
+
+    agg = (
+        sess.query(
+            Post.country_code.label("cc"),
+            func.count(Post.id).label("n"),
+            func.avg(Post.sentiment_score).label("avg"),
+        )
+        .filter(
+            Post.keyword == kw,
+            Post.created_at >= cutoff,
+            Post.country_code.isnot(None),
+        )
+        .group_by(Post.country_code)
+        .all()
+    )
     sess.close()
+
     return {
         "keyword": kw,
         "hours": hours,
-        "countries": [{"cc": r.cc, "n": r.n, "avg": float(r.avg)} for r in rows]
+        "countries": [
+            {"cc": row.cc, "n": int(row.n), "avg": float(row.avg)} for row in agg
+        ],
     }
+
+@app.get("/api/insights")
+def insights(q: str, hours: int = 24):
+    """
+    Summarize recent items (from DB) for a keyword using Gemini (if gemini_helper is available).
+    Returns: {summary, themes[], aspects{price,quality,service}, quotes[]}
+    """
+    if not _HAS_INSIGHTS:
+        raise HTTPException(status_code=400, detail="Insights not enabled on this server.")
+    kw = normalize_keyword(q)
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    sess = SessionLocal()
+    rows = (
+        sess.query(Post)
+        .filter(Post.keyword == kw, Post.created_at >= cutoff)
+        .order_by(Post.created_at.desc())
+        .limit(100)
+        .all()
+    )
+    sess.close()
+
+    if not rows:
+        raise HTTPException(status_code=400, detail="No posts found to summarize.")
+
+    posts = [
+        {
+            "text": r.text,
+            "sentiment_label": r.sentiment_label,
+            "sentiment_score": r.sentiment_score,
+            "created_at": r.created_at.isoformat(),
+            "source": r.source,
+            "country_code": r.country_code,
+        }
+        for r in rows
+    ]
+
+    result = summarize_posts(kw, posts)  # from gemini_helper.py
+    return result
+
+@app.get("/api/health")
+def health():
+    return {"ok": True}

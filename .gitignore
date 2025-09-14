@@ -15,3 +15,6 @@ dist/
 # Misc
 .env
 .DS_Store
+
+# Sensitive API keys
+google youtube api key.txt
